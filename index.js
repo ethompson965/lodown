@@ -9,6 +9,8 @@
  * @param {Array or Object} collection: The collection over which to iterate.
  * @param {Function} action: The Function to be applied to each value in the 
  * collection
+ * @return {undefined}: it just calls a provided function on each element in an array
+ * in which the function can mutate the calling array 
  */
 function each(collection, action) {
     if (Array.isArray(collection)) {
@@ -28,7 +30,7 @@ module.exports.each = each;
  *
  *@param {value}: The value to be returned in the function body 
  *@param{function} action: applies to the returned value in the function body
- *
+ *@return {value} the first value or argument given to identity 
  */
 
 function identity(value) {
@@ -39,6 +41,8 @@ module.exports.identity = identity;
 /*first: Designed to return the first element in an array 
  *@param:{array, number}
  *@param:{Function} action-applies to the first number items of an array
+ *@return {the first element or first numbered elements}- If a number is passed in, then 
+ first will return that number of elements in the array
  */
 
 function first(array, number) {
@@ -59,14 +63,16 @@ function first(array, number) {
 module.exports.first = first;
 
 /*last:Designed to return the last element in an array
- *@param: {array, number} 
- *@param: {Function} action- applies to the last number items in an array
+ *@param {array, number} 
+ *@param {Function} action: applies to the last number items in an array
+ *@return {array element}: the last element in an array or a number of multiple values if
+ * a number is passed in
  */
 
 
 
 function last(array, number) {
-    // debugger 
+    
     if (Array.isArray(array) === false || number < 0) {
         return [];
     }
@@ -88,6 +94,8 @@ module.exports.first = first;
 /*indexOf: returns the index of a value found in an array or -1 if the value is not in array
  *@param: {array, value}-Array is iterated over
  *@param{Function} action-applies to the index of the elements in an array
+ *@return{index, number}: if the value is found in an array, the index is return, if not 
+ *then -1 is returned
  */
 
 
@@ -107,6 +115,8 @@ module.exports.indexOf = indexOf;
  *@param{any value( i.e. string, array, object, undefined, etc.)}: to be returned as a string
  *after meeting the conditions
  *@param{Function} action-applies to any value in Javascript 
+ *@return{any Datatype}: the name of any datatype is printed in the console the typeof is applied to 
+ * that value 
  */
 
 function typeOf(val) {
@@ -132,6 +142,7 @@ module.exports.typeOf = typeOf;
 /*contains: returns a true when an array contains a value or false when value is not present
  *@param{array, value}: array is iterated over
  *@param{Function} action: applies to the value in an array that returns true if the conditions are met
+ *@return{Boolean} true if a value is an element in an array, false otherwise
  */
 
 function contains(array, value) {
@@ -144,10 +155,11 @@ function contains(array, value) {
 }
 module.exports.contains = contains;
 
-/*unique: returns a new array of all elements from an array with duplicates rempved. Only the first
- *occurrance of each value is kept in the array.
+/*unique: returns a new array of all elements from an array with duplicates removed. Only the first
+ *occurrence of each value is kept in the array.
  *@parameters{array}-the array is looped over and elemments are pushed into a new array 
  *@paramters{Function} action-applies to a new array being returned
+ *@return {array} a new array with all duplicate elements removed
  */
 
 function unique(array) {
@@ -167,6 +179,8 @@ module.exports.unique = unique;
 *@param{array, function}-the array is looped over and elements that pass the condition inside the
 function are pushed into a new array.
 *@param:{Function} action-applies to a new array with all the elements that meet the conditions
+@return {array}: like reject, except the array returned in filter holds all the truthy values from
+* the conditions of the function arguments
 */
 
 
@@ -186,6 +200,7 @@ module.exports.filter = filter;
  *@param{array, function}: If the elements in an array of a function do not return true, 
  * those elements are returned
  *@param{Function}action-applies to the elements that did not return true
+ @return{array} an array of all the falsy elements in the reject function
  */
 function reject(array, funct) {
     return filter(array, function(element, index, array) {
@@ -205,30 +220,31 @@ module.exports.reject = reject;
  *@param:{array, function}: function is passed in that checks to see if elements in array
  *are truthy or falsey values
  *@{Function} action-applies to a the new array holding two sub arrays with different types of 
+ *@return{array}: a new array with the two sub arrays created inside;
  *values*/
 
 function partition(array, funct) {
     //create two arrays 
     let arr1 = [];
     let arr2 = [];
-    //call function that rejects elements in array
+    
     reject(array, function(element, key, arr) {
-        //return if function conditions strictly equal true or false 
+        
         if (funct(element, key, arr) === true) {
-            //push the truthy values in 1st array
+            
             arr1.push(element);
 
 
-            //return the array with conditions
+            
 
         }
-        //if function conditions strictly equal false    
+           
         if (funct(element, key, arr) === false) {
-            //push falsy values in 2nd array
+            
             arr2.push(element);
         }
     });
-    //return statement
+    
     return [arr1, arr2];
 }
 module.exports.partition = partition;
@@ -237,6 +253,7 @@ module.exports.partition = partition;
 *@param{collection, function}-the each function can be used to loop over a collection, an array
 *or object, which applies to each value in the collection
 @{Function} action-applies to the new array created with values pushed into it
+*@return{array}: a new array with the modiefied values of the passed in function argument
 */
 
 function map(collection, funct) {
@@ -250,16 +267,17 @@ module.exports.map = map;
 
 /*pluck: returns a new array of property values 
  *@param:{array, property}:array contains objects whose properties are mapped through and elements 
- *are returned
+ *are returned. The lists of the given property are then extracted
  *@param: {Function}action-applies to the array being returned and containing the property values
+ @return{array}:the array includes the information of the extracted property
  */
 
 
 
 function pluck(array, property) {
-    //create an array to return the values
+    
 
-    //use the _.map function to access the values 
+    
     let arr = map(array, function(element) {
         return element[property];
     });
@@ -270,21 +288,25 @@ module.exports.pluck = pluck;
 
 
 /*every: returns a boolean based on the values in a collection, array or object
-*If the values meet the conditions of the each functions, every returns true, if the conditions
+*If the elements in the collection meet the conditions of the function passed in as an argument of
+every, every returns true, if the conditions
 *are false, it returns false
 *@param:{collection, function}:The collection is passed through the each function
-#@param:{Function}action:applies to the boolean that returns true or false depending on what 
-condition the function values meet*/
+*@param:{Function}action:applies to the boolean that returns true or false depending on what 
+condition the function values meet
+*@return{Boolean}-true if all the elements in array meet the condition of the argument function,
+*or false if at least one element does not meeet the condition
+*/
 
 function every(collection, funct) {
-    //assign a boolean to true
+    
     var bool = true;
 
 
     if (typeof funct === 'function') {
-        //use the each function to reference objective 1
+        
         each(collection, function(element, i, collection) {
-            //create an if else chain checking the conditions for true or false
+        
             if (funct(element, i, collection) === false) {
                 bool = false;
             }
@@ -303,18 +325,19 @@ function every(collection, funct) {
 module.exports.every = every;
 
 
-/*some: Designed to return a value of true if at least some of the values in the array return meet
- *the condition of true
+/*some: Designed to return a value of true if at least one of the elements in the array return meet
+ *the condition of true; it returns false when none of the elements in an array return true
  *@param{collection, function}-The collection is passed through the each function
  *@param{Function}action-applies to the boolean being returned based on the conditions the function
  *meets
+ @return{Boolean}-true if at least one of the elements meet the conditions, false otherwise 
  */
 
 function some(collection, funct) {
-    //assign boolean of true
+
     var bool = false;
-    //check if function is provided
-    //use _.each function to reference objective 1
+    
+    
     each(collection, function(element, i, collection) {
         if (funct === undefined) {
             if (!!element) {
@@ -333,10 +356,11 @@ module.exports.some = some;
 *@parameter{array, function, seed): seed is passed in iterations until it references the entire
 list
 *@parameter{Function} action-applies to the seed being returned after it has referenced the entire 
+*return{accumulator} where the total result function or value is stored
 *list*/
 
 function reduce(array, funct, seed) {
-    //use _.each function for objective 1
+    
     each(array, function(element, index, array) {
         if (seed === undefined) {
             seed = array[0];
@@ -356,20 +380,22 @@ module.exports.reduce = reduce;
 sourced into object1. The assign property, used to copy object properties can be incorporated in the 
 *extend function.
 @param:{Function} action-applies to an updated object returned with the properties of the other 
+*@return{object}: an object with its properties along with all the other properties of other objects
+*passed into the function
 *objects in it;*/
 
 function extend(object1, object2, object3) {
-    //access the function object arguments by using the Array.from() method
+    
     var args = Array.from(arguments);
     console.log(args);
     var arrWo = args.slice(1);
-    //To locate the elements in the objects array, loop through it with a for loop
+    
     for (var i = 0; i < arrWo.length; i++) {
-        //use the assign property
+        
         Object.assign(args[0], arrWo[i]);
     }
 
-    //to copy the other arguments into the 0 index of object1, use the assign property
+    
 
     return object1;
 }
