@@ -29,7 +29,6 @@ module.exports.each = each;
 /*identity: Designed to return the same value used as an argument 
  *
  *@param {value}: The value to be returned in the function body 
- *@param{function} action: applies to the returned value in the function body
  *@return {value} the first value or argument given to identity 
  */
 
@@ -39,8 +38,8 @@ function identity(value) {
 module.exports.identity = identity;
 
 /*first: Designed to return the first element in an array 
- *@param:{array, number}
- *@param:{Function} action-applies to the first number items of an array
+ *@param:{array}
+ @param: {number}
  *@return {the first element or first numbered elements}- If a number is passed in, then 
  first will return that number of elements in the array
  */
@@ -63,9 +62,9 @@ function first(array, number) {
 module.exports.first = first;
 
 /*last:Designed to return the last element in an array
- *@param {array, number} 
- *@param {Function} action: applies to the last number items in an array
- *@return {array element}: the last element in an array or a number of multiple values if
+ *@param {array} 
+  @param {number}
+ *@return {array}: the last element in an array or a number of multiple values if
  * a number is passed in
  */
 
@@ -92,8 +91,8 @@ function last(array, number) {
 module.exports.first = first;
 
 /*indexOf: returns the index of a value found in an array or -1 if the value is not in array
- *@param: {array, value}-Array is iterated over
- *@param{Function} action-applies to the index of the elements in an array
+ *@param: {array}-Array is iterated over
+ *@param{value}
  *@return{index, number}: if the value is found in an array, the index is return, if not 
  *then -1 is returned
  */
@@ -114,7 +113,6 @@ module.exports.indexOf = indexOf;
 /*typeOf: returns any type of given value as a string
  *@param{any value( i.e. string, array, object, undefined, etc.)}: to be returned as a string
  *after meeting the conditions
- *@param{Function} action-applies to any value in Javascript 
  *@return{any Datatype}: the name of any datatype is printed in the console the typeof is applied to 
  * that value 
  */
@@ -140,8 +138,8 @@ function typeOf(val) {
 module.exports.typeOf = typeOf;
 
 /*contains: returns a true when an array contains a value or false when value is not present
- *@param{array, value}: array is iterated over
- *@param{Function} action: applies to the value in an array that returns true if the conditions are met
+ *@param{array}: array is iterated over
+ *@param{value}
  *@return{Boolean} true if a value is an element in an array, false otherwise
  */
 
@@ -158,7 +156,6 @@ module.exports.contains = contains;
 /*unique: returns a new array of all elements from an array with duplicates removed. Only the first
  *occurrence of each value is kept in the array.
  *@parameters{array}-the array is looped over and elemments are pushed into a new array 
- *@paramters{Function} action-applies to a new array being returned
  *@return {array} a new array with all duplicate elements removed
  */
 
@@ -178,7 +175,7 @@ module.exports.unique = unique;
 *a new array
 *@param{array, function}-the array is looped over and elements that pass the condition inside the
 function are pushed into a new array.
-*@param:{Function} action-applies to a new array with all the elements that meet the conditions
+*@param:{Function} func-applies to a new array with all the elements that meet the conditions
 @return {array}: like reject, except the array returned in filter holds all the truthy values from
 * the conditions of the function arguments
 */
@@ -199,7 +196,7 @@ module.exports.filter = filter;
 /*reject: returns elements in a new array with elements that did not return true
  *@param{array, function}: If the elements in an array of a function do not return true, 
  * those elements are returned
- *@param{Function}action-applies to the elements that did not return true
+ *@param{Function}func-applies to the elements that did not return true
  @return{array} an array of all the falsy elements in the reject function
  */
 function reject(array, funct) {
@@ -219,7 +216,7 @@ module.exports.reject = reject;
  *and one that holds elements with falsy values
  *@param:{array, function}: function is passed in that checks to see if elements in array
  *are truthy or falsey values
- *@{Function} action-applies to a the new array holding two sub arrays with different types of 
+ *@{Function} func-applies to a the new array holding two sub arrays with different types of 
  *@return{array}: a new array with the two sub arrays created inside;
  *values*/
 
@@ -252,8 +249,8 @@ module.exports.partition = partition;
 /*map:looks through each value in an array and returns a new array of values 
 *@param{collection, function}-the each function can be used to loop over a collection, an array
 *or object, which applies to each value in the collection
-@{Function} action-applies to the new array created with values pushed into it
-*@return{array}: a new array with the modiefied values of the passed in function argument
+@{Function} func-applies to the new array created with values pushed into it
+*@return{array}: a new array with the modiefied values of the passed in callback function
 */
 
 function map(collection, funct) {
@@ -266,9 +263,9 @@ function map(collection, funct) {
 module.exports.map = map;
 
 /*pluck: returns a new array of property values 
- *@param:{array, property}:array contains objects whose properties are mapped through and elements 
- *are returned. The lists of the given property are then extracted
- *@param: {Function}action-applies to the array being returned and containing the property values
+ *@param:{array}:array contains objects whose properties are mapped through and elements 
+ *are returned. 
+ @param{property}:The lists of the given property are then extracted
  @return{array}:the array includes the information of the extracted property
  */
 
@@ -291,8 +288,8 @@ module.exports.pluck = pluck;
 *If the elements in the collection meet the conditions of the function passed in as an argument of
 every, every returns true, if the conditions
 *are false, it returns false
-*@param:{collection, function}:The collection is passed through the each function
-*@param:{Function}action:applies to the boolean that returns true or false depending on what 
+*@param:{collection}:The collection is passed through the each function
+*@param:{Function}func:applies to the boolean that returns true or false depending on what 
 condition the function values meet
 *@return{Boolean}-true if all the elements in array meet the condition of the argument function,
 *or false if at least one element does not meeet the condition
@@ -330,6 +327,8 @@ module.exports.every = every;
  *@param{collection, function}-The collection is passed through the each function
  *@param{Function}action-applies to the boolean being returned based on the conditions the function
  *meets
+ *If there's no function provided, only one element returns true for the function return true. 
+ * else the function will return false.
  @return{Boolean}-true if at least one of the elements meet the conditions, false otherwise 
  */
 
@@ -355,7 +354,7 @@ module.exports.some = some;
 /*reduce: Designed to consolidate a list of values into a single value
 *@parameter{array, function, seed): seed is passed in iterations until it references the entire
 list
-*@parameter{Function} action-applies to the seed being returned after it has referenced the entire 
+*@parameter{Function} funct-applies to the seed being returned after it has referenced the entire 
 *return{accumulator} where the total result function or value is stored
 *list*/
 
@@ -379,7 +378,6 @@ module.exports.reduce = reduce;
 *copied into object1, the target object. If the other objects are passed in, their properties are
 sourced into object1. The assign property, used to copy object properties can be incorporated in the 
 *extend function.
-@param:{Function} action-applies to an updated object returned with the properties of the other 
 *@return{object}: an object with its properties along with all the other properties of other objects
 *passed into the function
 *objects in it;*/
