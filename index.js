@@ -9,8 +9,7 @@
  * @param {Array or Object} collection: The collection over which to iterate.
  * @param {Function} action: The Function to be applied to each value in the 
  * collection
- * @return {undefined}: it just calls a provided function on each element in an array
- * in which the function can mutate the calling array 
+ *
  */
 function each(collection, action) {
     if (Array.isArray(collection)) {
@@ -38,9 +37,9 @@ function identity(value) {
 module.exports.identity = identity;
 
 /*first: Designed to return the first element in an array 
- *@param:{array}
- @param: {number}
- *@return {the first element or first numbered elements}- If a number is passed in, then 
+ *@param:{array} an array: an array to be iterated over
+ @param: {number} an number: a number that may or may not be defined
+ *@return {the first element or multiple values in array}- If a number is passed in, then 
  first will return that number of elements in the array
  */
 
@@ -62,10 +61,10 @@ function first(array, number) {
 module.exports.first = first;
 
 /*last:Designed to return the last element in an array
- *@param {array} 
-  @param {number}
- *@return {array}: the last element in an array or a number of multiple values if
- * a number is passed in
+ *@param {array} an array: an array-array that is iterated over 
+  @param {number}-a number: a number that may or may not be defined
+ *@return {the last element or multiple values in an array}: the last element
+ in an array or a number of multiple values if a number is passed in
  */
 
 
@@ -92,7 +91,7 @@ module.exports.first = first;
 
 /*indexOf: returns the index of a value found in an array or -1 if the value is not in array
  *@param: {array}-Array is iterated over
- *@param{value}
+ *@param{value}a value: the value is checked for being an element in an array
  *@return{index, number}: if the value is found in an array, the index is return, if not 
  *then -1 is returned
  */
@@ -111,7 +110,8 @@ function indexOf(array, value) {
 module.exports.indexOf = indexOf;
 
 /*typeOf: returns any type of given value as a string
- *@param{any value( i.e. string, array, object, undefined, etc.)}: to be returned as a string
+ *@param{any value( i.e. string, array, object, undefined, etc.)} various Datatypes : 
+ to be returned as a string
  *after meeting the conditions
  *@return{any Datatype}: the name of any datatype is printed in the console the typeof is applied to 
  * that value 
@@ -139,7 +139,7 @@ module.exports.typeOf = typeOf;
 
 /*contains: returns a true when an array contains a value or false when value is not present
  *@param{array}: array is iterated over
- *@param{value}
+ *@param{value}: a value: the value is checked for being an element in an array
  *@return{Boolean} true if a value is an element in an array, false otherwise
  */
 
@@ -155,8 +155,8 @@ module.exports.contains = contains;
 
 /*unique: returns a new array of all elements from an array with duplicates removed. Only the first
  *occurrence of each value is kept in the array.
- *@parameters{array}-the array is looped over and elemments are pushed into a new array 
- *@return {array} a new array with all duplicate elements removed
+ *@parameters{array} an array-the array is looped over and elemments are pushed into a new array 
+ *@return {array}: a new array with all duplicate elements removed
  */
 
 function unique(array) {
